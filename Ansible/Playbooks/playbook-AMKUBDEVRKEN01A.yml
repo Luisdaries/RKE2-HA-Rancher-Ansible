@@ -15,6 +15,16 @@
           - apparmor
         state: present
 
+    - name: Instalar kubectl
+      snap:
+        name: kubectl
+        classic: yes
+
+    - name: Instalar helm
+      snap:
+        name: helm
+        classic: yes
+
     - name: Descargar script de instalación de RKE2
       get_url:
         url: https://get.rke2.io
@@ -50,24 +60,18 @@
         state: started
 
     - name: Esperar a que el nodo esté listo
-      command: /usr/local/bin/rke2 kubectl get nodes
+      command: /var/lib/rancher/rke2/bin/kubectl get nodes --kubeconfig /etc/rancher/rke2/rke2.yaml
       register: kubectl_nodes
-      retries: 30
-      delay: 10
+      retries: 10
+      delay: 5
       until: kubectl_nodes.rc == 0
       changed_when: false
 
     - name: Configurar acceso a kubectl para el usuario vagrant
       copy:
         src: /etc/rancher/rke2/rke2.yaml
-        dest: /home/vagrant/.kube/config
-        owner: vagrant
-        group: vagrant
+        dest: /root/.kube/config
+        owner: root
+        group: root
         mode: '0600'
         remote_src: yes
-
-    - name: Actualizar KUBECONFIG para el usuario vagrant
-      lineinfile:
-        path: /home/vagrant/.bashrc
-        line: 'export KUBECONFIG=/home/vagrant/.kube/config'
-        state: present

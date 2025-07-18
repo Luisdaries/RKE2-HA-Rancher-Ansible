@@ -1,4 +1,4 @@
 [nodes]
 AMKUBDEVRKEN01A ansible_host=10.98.72.101 ansible_user=vagrant ansible_private_key_file=../.vagrant/machines/AMKUBDEVRKEN01A/libvirt/private_key
 AMKUBDEVRKEN01B ansible_host=10.98.72.102 ansible_user=vagrant ansible_private_key_file=../.vagrant/machines/AMKUBDEVRKEN01B/libvirt/private_key
-AMKUBDEVRKEN01C ansible_host=10.98.72.103 ansible_user=vagrant ansible_private_key_file=../.vagrant/machines/AMKUBDEVRKEN01C/libvirt/private_key
+AMKUBDEVRKEN02A ansible_host=10.98.72.103 ansible_user=vagrant ansible_private_key_file=../.vagrant/machines/AMKUBDEVRKEN02A/libvirt/private_key

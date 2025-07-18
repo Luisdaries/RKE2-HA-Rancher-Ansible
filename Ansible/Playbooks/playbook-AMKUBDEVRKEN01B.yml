@@ -40,7 +40,7 @@
           node-name: master-2
           tls-san:
             - 10.98.72.102
-            - AMKUBDEVRKEN02A
+            - AMKUBDEVRKEN01B
         dest: /etc/rancher/rke2/config.yaml
         mode: '0644'
 
@@ -49,26 +49,3 @@
         name: rke2-server
         enabled: yes
         state: started
-
-    - name: Esperar a que el nodo esté listo
-      command: /usr/local/bin/rke2 kubectl get nodes
-      register: kubectl_nodes
-      retries: 30
-      delay: 10
-      until: kubectl_nodes.rc == 0
-      changed_when: false
-
-    - name: Configurar acceso a kubectl para el usuario vagrant
-      copy:
-        src: /etc/rancher/rke2/rke2.yaml
-        dest: /home/vagrant/.kube/config
-        owner: vagrant
-        group: vagrant
-        mode: '0600'
-        remote_src: yes
-
-    - name: Actualizar KUBECONFIG para el usuario vagrant
-      lineinfile:
-        path: /home/vagrant/.bashrc
-        line: 'export KUBECONFIG=/home/vagrant/.kube/config'
-        state: present
